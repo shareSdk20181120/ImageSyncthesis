@@ -1,0 +1,51 @@
+项目相关
+	描述下UI框架，框架中使用了哪些设计模式？
+	
+	做项目的过程中，印象比较深刻的问题有哪些？
+		工程站中的造船功能，UI面板上有加特效，导致在Scroll Rect下mask遮盖不了特效问题 ，加shader解决
+		还有个就是对一个做模糊效果，需要用到shader
+	对UI做过哪些优化？
+		摆放UI元素的某些规则，可以减少DrallCall
+				1.Imag Text image这种顺序就会多一个DrawCall，使用Image image text 就会减少。。
+	如何减少DrawCall？
+		使用动态、静态批处理
+		打包图集--将较小的图片打包成一张大图
+		少用Mask
+		摆放UI元素的某些规则，可以减少DrallCall
+				1.Imag Text image这种顺序就会多一个DrawCall，使用Image image text 就会减少。。
+	unity中有哪些可以加载和卸载AssetBundle的方法？
+		加载方式：
+			AssetBundle.LoadFromFile
+			AssetBundle.LoadFromMemory
+			WWW.LoadFromCachedOrDownload
+			UnityWebReq
+		卸载
+			AssetBundle.Unload(bool);
+			
+	Resource.UnloadUnusedAssets卸载资源的前提条件是什么？
+		卸载之前清除掉所有相关引用，否则卸载不掉的
+	
+	
+C#基础知识
+
+	8种数据结构有哪些？
+		数组、链表、散列表、堆、栈、队列、树、图、
+	List，Dictionary底层是什么数据结构？什么时候使用它们呢？
+		list是底层是数组，存的速度快
+		Dictionary底层是链表形式，查找速度快
+		快速访问对象的话，字典是首选
+		
+	new 作为关键字，有哪些作用？
+		1）new作为修饰符时，可以隐藏基类的某些成员变量
+		2）new一个实例化对象
+
+NGUI插件知识
+
+	NGUI中如何控制panel以及panel内widget层级？
+	
+	如何减少Ngui中的drawCall？
+		尽可能将动态UI元素和静态UI元素分离到不通的UIPanel（UI的重建以UIPanel为单位）中，从而将动态的ui元素引起的重构控制在较小的范围。
+		动态UI元素按照同步性进行划分，即同频率的ui放到一起
+		控制UIPanel下的动态UI元素的数量，数量越多构建的mesh就越大。例如战斗中血条
+		
+	使用NGUI总哪些组件来解决屏幕适配问题？

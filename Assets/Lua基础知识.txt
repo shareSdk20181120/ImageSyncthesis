@@ -1,0 +1,82 @@
+Lua基础知识
+
+	使用哪个Lua方案、用的哪个IDE编写、调试Lua?
+		toLua方案
+		使用的IntelJ IDEA编写调试Lua。	
+
+	lua中8种数据类型有哪些？
+		nil，number，boolean，string，table，userdata，function，thread
+	
+		给不使用的变量赋值nil，等同于把他们删掉，nil作比较时应加上引号。
+		userdata自定义类型，用于表示由c/c++语言库所创建的类型，可以将任意c/c++的数据类型（通常是struct，指针）存储在lua变量中调用
+	线程和协程的区别？
+		协程拥有自己独立的栈、局部变量和指令指针，可以和其他协调程序共享全局变量和大部分东西
+		线程可以同时运行多个，
+		协程在任意时刻只能运行一个，并且处于运行状态的协程只有被挂起（suspend）时才会暂停。
+		
+	描述下闭包？
+		函数的函数里面引用外部函数的定义的变量，这种方式就是闭包。
+		
+	Lua里面如何实现Class？
+		使用的table，例如：定义一个table loginPanel={};
+		 定义一个局部变量 local loginPanel.transform;
+		 定义一个公共函数 
+		 function loginPanel:new(o)
+			 o=o or {}
+			 setmetatable(o,self)
+			 self._index=self
+			 
+			 return o
+		 end
+		 function loginPanel:CreatPanel(){}
+		 
+		
+	Lua面向对象函数中代表当前对象的关键字是什么？如何实现继承关系
+		self关键字
+		通过设置元表的方式实现继承关系
+		
+	Lua中_index和_newindex分别代表什么，有什么作用？
+		_index元方法 用于查看表中元素是否存在，不存在返回结果nil，存在则有_index返回结果。
+		
+		_newindex用于对表更新，_index用于对表进行访问。
+		
+	Lua中require的作用是什么，和DoFile有什么区别，多次使用require和dofile有什么影响吗？
+		require执行它后会返回一个由模块常量或函数组成的table并且还会定义一个包含改table的全局变量。用于lua里面。只在开始时加载一次，多次使用，返回的是缓存的值
+		doFile加载文件，用于c#里面。每调用一次就加载一次			
+		
+	Lua中Require、doFile、LoadFile的区别
+		Require--加载一个.Lua文件时，他会先判断package.loaded中此模块是否存在，如果存在就返回，否则就是重新加载模块。
+		doFile--读代码文件并编译执行，每调用一次就会重新编译一次
+		loadFile--编译代码，将整个模块当成一个函数返回，但是不执行代码。其实dofile是对loadFile的一次封装
+		
+		总结：Require只会加载一次，doFile可以重复加载。如果要重新使用Require加载模块，先package.loaded["ModelName.lua"]=nil;后Require “ModelName.lua”
+	
+	Lua有哪些数据结构？List和table的区别在哪里？
+		数组、链表、队列、堆、集合 这些数据结构都可以通过table实现
+		
+	Lua循环
+		while do ...		end		
+		for...		do....		end;
+		repeat.....until
+	lua协程
+		function foo(a)
+			print(a)
+		end
+		
+		co=coroutine.create(
+		function(a,b)
+			print(a..b)
+			local r=foo(a)
+		
+		end
+		)
+		
+		coroutine.resume(co,1,10)
+		print(coroutine.status(co))
+		print(coroutine.running())
+	lua垃圾回收器函数
+		collectgarbage("collect");执行 垃圾回收
+		collectgarbage("count");lua使用的总内存数
+		collectgarbage("restart") 
+		collectgarbage("stop") 停止垃圾收集器的运行
+		

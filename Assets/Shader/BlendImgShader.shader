@@ -14,6 +14,9 @@
 
 		Pass
 		{
+			Tags{"LightMode"="ForwardBase"}
+			ZWrite Off
+			Blend SrcAlpha OneMinusSrcAlpha
 			CGPROGRAM
 			#pragma vertex vert
 			#pragma fragment frag
